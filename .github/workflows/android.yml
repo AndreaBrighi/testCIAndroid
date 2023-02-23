@@ -27,8 +27,9 @@ jobs:
     - name: Unit test with Gradle
       run: ./gradlew testDebugUnitTest
     - name: Device test with Gradle
-      uses: reactivecircus/android-emulator-runner@v2
+      uses: ReactiveCircus/android-emulator-runner@v2
       with:
         api-level: 30
         target: google_apis
-        script: ./gradlew connectedCheck --stacktrace
+        arch: x86_64
+        script: ./gradlew connectedCheck
