@@ -2,7 +2,7 @@ name: Android CI
 
 on:
   push:
-    ignore:
+    branches-ignore:
       - main
   workflow_dispatch:
 
