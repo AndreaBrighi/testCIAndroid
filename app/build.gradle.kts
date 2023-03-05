@@ -1,10 +1,9 @@
-import com.android.build.api.dsl.Packaging
-
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
 }
 
+@OptIn(ExperimentalUnsignedTypes::class)
 android {
     namespace = "com.example.myapplication"
     compileSdk = 33
@@ -13,8 +12,8 @@ android {
         applicationId = "com.example.myapplication"
         minSdk = 29
         targetSdk = 33
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = gitSemVer.computeVersionCode()
+        versionName = gitSemVer.computeVersion()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -28,6 +27,7 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
     compileOptions {
@@ -54,6 +54,7 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
+    testImplementation(libs.bundles.kotlin.testing)
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -61,4 +62,13 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+}
+
+@OptIn(ExperimentalUnsignedTypes::class)
+fun org.danilopianini.gradle.gitsemver.GitSemVerExtension.computeVersionCode(): Int {
+    val parts =
+        this.computeVersion()
+            .split(this.preReleaseSeparator.get())[0]
+            .split(".")
+    return parts[0].toInt() * 1000000 + parts[1].toInt() * 1000 + parts[2].toInt()
 }
