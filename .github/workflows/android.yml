@@ -2,6 +2,8 @@ name: Android CI
 
 on:
   push:
+    ignore:
+      - main
   workflow_dispatch:
 
 jobs:
