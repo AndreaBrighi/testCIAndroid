@@ -1,0 +1,11 @@
+{
+  "devDependencies": {
+    "semantic-release-preconfigured-conventional-commits": "1.1.15"
+  },
+  "engines": {
+    "node": "18.12"
+  },
+  "release": {
+    "branches": ["main"]
+  }
+}
