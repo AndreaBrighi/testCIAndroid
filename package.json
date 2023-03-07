@@ -4,10 +4,5 @@
   },
   "engines": {
     "node": "18.12"
-  },
-  "release": {
-    "branches": [
-      "main"
-    ]
   }
 }
