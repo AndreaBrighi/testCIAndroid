@@ -1,5 +1,8 @@
 package com.example.myapplication
 
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -12,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.myapplication.ui.theme.MyApplicationTheme
 
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,7 +26,19 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    val version =try {
+                        val pInfo: PackageInfo =
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                                packageManager.getPackageInfo(packageName, PackageManager.PackageInfoFlags.of(0.toLong()))
+                            } else {
+                                packageManager.getPackageInfo(packageName, 0)
+                            }
+                        pInfo.versionName
+                    } catch (e: PackageManager.NameNotFoundException) {
+                        e.printStackTrace()
+                        "0.0.0"
+                    }
+                    Greeting("Android", version)
                 }
             }
         }
@@ -30,9 +46,9 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
+fun Greeting(name: String, version: String, modifier: Modifier = Modifier) {
     Text(
-        text = "Hello $name!",
+        text = "Hello $name! from $version",
         modifier = modifier
     )
 }
@@ -41,6 +57,6 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
     MyApplicationTheme {
-        Greeting("Android")
+        Greeting("Android", "0.0.0")
     }
 }
