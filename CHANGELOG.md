@@ -1,3 +1,15 @@
+## [1.2.0](https://github.com/AndreaBrighi/testCIAndroid/compare/1.1.0...1.2.0) (2023-03-07)
+
+
+### Features
+
+* test ([15748c4](https://github.com/AndreaBrighi/testCIAndroid/commit/15748c451234caba23e028958762bd12a1d2fe79))
+
+
+### Build and continuous integration
+
+* set jvm version to 17 for release ([1c347ec](https://github.com/AndreaBrighi/testCIAndroid/commit/1c347ecd8a5e7da1a59c973eec79da27f47b2ed4))
+
 ## [1.1.0](https://github.com/AndreaBrighi/testCIAndroid/compare/1.0.0...1.1.0) (2023-03-07)
 
 
