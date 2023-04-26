@@ -1,7 +1,7 @@
 [versions]
-kotest = "5.5.1"
-kotlin = "1.7.20"
-gradle = "8.0.0-beta04"
+kotest = "5.5.5"
+kotlin = "1.8.20"
+gradle = "8.0.0"
 
 [libraries]
 build-gradle = {module = "com.android.tools.build:gradle", version.ref = "gradle" }
