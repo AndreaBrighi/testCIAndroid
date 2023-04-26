@@ -19,7 +19,7 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Build with Gradle
-        run: ./gradlew build
+        run: ./gradlew assembleDebug
 
 #  test:
 #    runs-on: ubuntu-latest
@@ -117,9 +117,11 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: create key
-        run: echo "${{ secrets.SIGNING_KEY }}" >> key.jks
+        run: echo "$SIGNING_KEY" | base64 -d > key.jks
+        env:
+          SIGNING_KEY: ${{secrets.SIGNING_KEY}}
       - name: Generate app Bundle.
-        run: ./gradlew app:bundleRelease --stacktrace -PstorePassword=${{ secrets.STORE_PASSWORD }} -PkeyPassword=${{ secrets.KEY_PASSWORD }} -PkeyAlias=${{ secrets.KEY_ALIAS }}
+        run: ./gradlew app:bundleRelease --stacktrace -PstorePassword="${{secrets.KEY_STORE_PASSWORD}}" -PkeyPassword="${{secrets.KEY_PASSWORD}}" -PkeyAlias="${{secrets.ALIAS}}"
       - name: Upload Bundle
         uses: actions/upload-artifact@v2
         with:
