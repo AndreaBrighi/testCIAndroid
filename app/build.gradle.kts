@@ -1,9 +1,14 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("io.github.andreabrighi.android-git-sensitive-semantic-versioning-gradle-plugin") version "1.0.2"
 }
 
-@OptIn(ExperimentalUnsignedTypes::class)
+androidGitSemVer {
+    buildMetadataSeparator.set("-")
+    maxVersionLength.set(20)
+}
+
 android {
     namespace = "com.example.myapplication"
     compileSdk = 33
@@ -12,43 +17,59 @@ android {
         applicationId = "com.example.myapplication"
         minSdk = 29
         targetSdk = 33
-        versionCode = gitSemVer.computeVersionCode()
-        versionName = gitSemVer.computeVersion()
+        versionCode = androidGitSemVer.computeVersionCode()
+        versionName = androidGitSemVer.computeVersion()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
     }
+    val storePassword: String? by project
+    val keyAlias: String? by project
+    val keyPassword: String? by project
+    signingConfigs {
+        create("release") {
+            // You need to specify either an absolute path or include the
+            // keystore file in the same directory as the build.gradle file.
+            storeFile = file("./../key.jks")
+            this.storePassword = storePassword
+            this.keyAlias = keyAlias
+            this.keyPassword = keyPassword
+        }
+    }
 
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"),
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.getByName("release")
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "17"
     }
     buildFeatures {
-        compose =true
+        compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion= "1.3.2"
+        kotlinCompilerExtensionVersion = "1.4.5"
     }
 }
 
+
+
 dependencies {
-    implementation("androidx.core:core-ktx:1.9.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
-    implementation("androidx.activity:activity-compose:1.6.1")
+    implementation("androidx.core:core-ktx:1.10.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
+    implementation("androidx.activity:activity-compose:1.7.0")
     implementation(platform("androidx.compose:compose-bom:2023.01.00"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
@@ -62,13 +83,5 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
-}
-
-@OptIn(ExperimentalUnsignedTypes::class)
-fun org.danilopianini.gradle.gitsemver.GitSemVerExtension.computeVersionCode(): Int {
-    val parts =
-        this.computeVersion()
-            .split(this.preReleaseSeparator.get())[0]
-            .split(".")
-    return parts[0].toInt() * 1000000 + parts[1].toInt() * 1000 + parts[2].toInt()
+    implementation(project(":lib"))
 }

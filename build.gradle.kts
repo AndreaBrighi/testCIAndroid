@@ -4,21 +4,13 @@ plugins {
     alias(libs.plugins.library) apply false
     alias(libs.plugins.android) apply false
     alias(libs.plugins.kotlin.jvm)
-    alias(libs.plugins.gitSemVer)
-}
-
-allprojects {
-    apply(plugin = "org.danilopianini.git-semver")
-    gitSemVer {
-        buildMetadataSeparator.set("-")
-        maxVersionLength.set(20)
-    }
 }
 
 buildscript {
     repositories {
         google()
         jcenter()
+        mavenCentral()
     }
     dependencies {
         classpath(libs.build.gradle)
