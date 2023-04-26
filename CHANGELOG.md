@@ -1,3 +1,26 @@
+## [1.3.0](https://github.com/AndreaBrighi/testCIAndroid/compare/1.2.0...1.3.0) (2023-04-26)
+
+
+### Features
+
+* ci ([ccaf9a0](https://github.com/AndreaBrighi/testCIAndroid/commit/ccaf9a016ec71a4b76d8c5622368f5187047c5f6))
+
+
+### Bug Fixes
+
+* remove lib ([cad9cf5](https://github.com/AndreaBrighi/testCIAndroid/commit/cad9cf592bbe9e6f8c32d8944dcdca90e90b7b9d))
+* update dep ([bef572e](https://github.com/AndreaBrighi/testCIAndroid/commit/bef572e5684625771fc9369215bb13553d6b1bfe))
+
+
+### General maintenance
+
+* log ([416f944](https://github.com/AndreaBrighi/testCIAndroid/commit/416f94450d61121082bf16e8b5de6043f749a7a2))
+
+
+### Build and continuous integration
+
+* create file for saving key ([28e4a87](https://github.com/AndreaBrighi/testCIAndroid/commit/28e4a877cd24c4c87577f3733be63c0a86baf4c8))
+
 ## [1.2.0](https://github.com/AndreaBrighi/testCIAndroid/compare/1.1.0...1.2.0) (2023-03-07)
 
 
