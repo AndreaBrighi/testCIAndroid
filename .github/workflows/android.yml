@@ -117,7 +117,7 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: create key
-        run: ${{ secrets.SIGNING_KEY }} >> key.jks
+        run: echo "${{ secrets.SIGNING_KEY }}" >> key.jks
       - name: Generate app Bundle.
         run: ./gradlew app:bundleRelease --stacktrace -PstorePassword=${{ secrets.STORE_PASSWORD }} -PkeyPassword=${{ secrets.KEY_PASSWORD }} -PkeyAlias=${{ secrets.KEY_ALIAS }}
       - name: Upload Bundle
